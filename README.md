@@ -1,18 +1,15 @@
-# Digital_Payments 💰
-## Developing an application with an emphasis on digital payments.
+<h1 align="center">Digital_Payments 💰</h1>
 
-![Badge](https://img.shields.io/badge/PHP-8.0.1-%23777bb4?style=flat)
-![Badge](https://img.shields.io/badge/Database-MySQL-%234479a1?style=flat)
-![Badge](https://img.shields.io/badge/IDE-VSCODE-%23007acc?style=flat)
-![Badge](https://img.shields.io/badge/XAMPP-3.2.4-%23fb7a24?style=flat)
-![Badge](https://img.shields.io/badge/Authorization-JWT-%23000000?style=flat)
-![Badge](https://img.shields.io/badge/composer-2.0.13-%23885630?style=flat)
-![Badge](https://img.shields.io/badge/npm-7.6.3-%23cb3837?style=flat)
-![Badge](https://img.shields.io/badge/API_Designer-Insomnia-%235849be?style=flat)
-![Badge](https://img.shields.io/badge/SQLyog_Communit-13.1.7-%23007acc?style=flat)
-<a href="https://github.com/DayaneCordeiro/PHP_API_REST/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/DayaneCordeiro/PHP_API_REST"></a>
-<a href="https://github.com/DayaneCordeiro/PHP_API_REST/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/DayaneCordeiro/PHP_API_REST"></a>
-<a href="https://github.com/DayaneCordeiro/PHP_API_REST/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/DayaneCordeiro/PHP_API_REST"></a>
+![Badge](https://img.shields.io/github/forks/DayaneCordeiro/Digital_Payments?style=social)&nbsp;&nbsp;&nbsp;
+![Badge](https://img.shields.io/github/stars/DayaneCordeiro/Digital_Payments?style=social)&nbsp;&nbsp;&nbsp;
+![Badge](https://img.shields.io/github/license/DayaneCordeiro/Digital_Payments?style=social)<br>
+
+![Badge](https://img.shields.io/badge/PHP-8.0.10-blue)
+![Badge](https://img.shields.io/badge/Docker-20.10.8-blue)
+![Badge](https://img.shields.io/badge/Laravel-8.68.0-critical)
+![Badge](https://img.shields.io/badge/Mysql-5.7.22-important)
+
+<h1>Developing an application with an emphasis on digital payments.</h1>
 
 <p align="center">
     <a href="#about">About</a> •
