@@ -20,7 +20,6 @@ class CreateTransactionsTable extends Migration
             $table->double('value', 8, 2);
             $table->json('auth_confirmation');
             $table->json('email_confirmation');
-            $table->enum('status', ['approved', 'canceled', 'pending', 'not-approved']);
             $table->timestamps();
         });
     }
