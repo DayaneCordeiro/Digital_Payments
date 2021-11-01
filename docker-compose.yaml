@@ -1,0 +1,83 @@
+version: "3.7"                            # Dockerfile version
+
+networks:                                 # Container communication network
+  app-network:
+    driver: bridge
+
+services:                                 # Definitions and configurations of the services
+  app:                                    # Custom PHP container configurations
+    build:                                # Defines that the service image must be constructed first
+      context: ./                         # Definition file path
+      dockerfile: Dockerfile              # Definition file name
+    image: laravel8-php-fpm-80            # Image name
+    container_name: app
+    restart: unless-stopped               # Restart and working directory policy
+    tty: true
+    working_dir: /var/www
+    volumes:                              # Map src/ files to var/www
+      - ./src:/var/www
+    networks:                             # Conect this container on network that was created before
+      - app-network
+
+  mysql:
+    image: mysql:5.7.33
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    environment: 
+        MYSQL_DATABASE: digital_payments
+        MYSQL_ROOT_PASSWORD: 123456
+        MYSQL_PASSWORD: 123456
+        MYSQL_USER: digital_payments
+        SERVICE_TAGS: dev
+        SERVICE_NAME: mysql
+    volumes: 
+        - ./mysql/data:/var/lib/mysql
+    networks:
+        - app-network
+
+  nginx:                                  # Nginx Container - will receive HTTP requests and will sendo to PHP container
+    image: nginx:1.19.8-alpine            # Light Nginx image
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports: 
+        - 8100:80                         # Map local port 8100 to container port 80
+    volumes: 
+        - ./src:/var/www
+        - ./nginx/conf:/etc/nginx/conf.d
+    networks: 
+        - app-network
+  
+  redis:                                  # Cache service container
+    image: redis:6.2.1-buster
+    container_name: redis
+    restart: unless-stopped
+    tty: true
+    volumes: 
+        - ./redis/data:/data
+    networks: 
+        - app-network
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    restart: unless-stopped
+    ports: 
+        - 8025:8025
+    networks: 
+        - app-network
+
+  phpmyadmin:
+    image: phpmyadmin:5.1.0-apache
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports: 
+        - 8200:80
+    environment:
+        PMA_HOST: mysql
+        PMA_PORT: 3306
+        PMA_USER: digital_payments
+        PMA_PASSWORD: 123456
+    networks:
+        - app-network
