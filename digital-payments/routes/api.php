@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // User Routes
-Route::get('user/{id}', 'UserController@getUser');
+Route::get('user/list/{id}', 'UserController@getUser');
 Route::post('user', 'UserController@createUser');
 Route::delete('user/{id}', 'UserController@deleteUser');
 
