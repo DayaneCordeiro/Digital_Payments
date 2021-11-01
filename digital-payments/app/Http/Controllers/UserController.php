@@ -10,4 +10,17 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function getUser($id) {
+        // to do
+    }
+
+    public function createUser(Request $request) {
+        // to do
+    }
+
+    public function deleteUser($id) {
+        // to do
+    }
 }
+
