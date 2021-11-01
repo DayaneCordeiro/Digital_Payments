@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redis;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +18,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/store', function() {
+    Redis::set('foo', 'bar');
+});
+
+Route::get('/retrieve', function() {
+    return Redis::get('foo');
+});
+
+Route::get('/send-email', function() {
+    Mail::to('dayane.cordeirogs@gmail.com')->send(new TestMail);
 });
