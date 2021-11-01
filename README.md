@@ -4,7 +4,7 @@
 ![Badge](https://img.shields.io/github/stars/DayaneCordeiro/Digital_Payments?style=social)&nbsp;&nbsp;&nbsp;
 ![Badge](https://img.shields.io/github/license/DayaneCordeiro/Digital_Payments?style=social)<br>
 
-![Badge](https://img.shields.io/badge/PHP-8.0.10-blue)
+![Badge](https://img.shields.io/badge/PHP-8.0.3-blue)
 ![Badge](https://img.shields.io/badge/Docker-20.10.8-blue)
 ![Badge](https://img.shields.io/badge/Laravel-8.68.0-critical)
 ![Badge](https://img.shields.io/badge/MySQL-5.7.22-important)
