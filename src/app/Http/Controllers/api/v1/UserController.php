@@ -5,6 +5,9 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+// use GuzzleHttp\Exception\GuzzleException;
+// use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 use App\Models\User;
 
@@ -16,24 +19,54 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $users = User::all();
-        return response()->json($users, 200);
+        // Forma de usar os mocks
+        $response = Http::get('https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6');
+        return $response;
+        // $users = User::all();
+        // return response()->json($users, 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // Validation rulers -> talvez fazer tudo manualmente vide documentação salva nos favoritos
+        // Validating type
+        $acceptableTypes = ['common', 'shopkeeper'];
+
+        if (!in_array($request->type, $acceptableTypes)) {
+            return response()->json(["message" => "User type must be common or shopkeeper."], 400);
+        }
+
+        // Validating CPF and CNPJ
+        $userWithSameCpf = User::where('cpf_cnpj', $request->cpf_cnpj)->first();
+        
+        if ($userWithSameCpf) {
+            return response()->json(["message" => "CPF or CNPJ is already in use."], 400);
+        }
+
+        $documentValidation = ($request->type == "common") ? $this->validateCpf($request->cpf_cnpj) : $this->validateCnpj($request->cpf_cnpj);
+
+        if (!$documentValidation) {
+            return response()->json(["message" => "CPF or CNPJ is invalid."], 400);
+        }
+
+        // Validating email
+        $userWithSameEmail = User::where('email', $request->email)->first();
+
+        if ($userWithSameEmail) {
+            return response()->json(["message" => "Email is already in use."],400);
+        }
+
+        // Validation rulers
         $rules = [
             'name'     => 'required',
             'email'    => 'required|email',
             'password' => 'required',
-            'cpf_cnpj' => 'required',
+            'cpf_cnpj' => 'required|numeric',
             'type'     => 'required',
         ];
 
@@ -44,21 +77,25 @@ class UserController extends Controller
             'email.email'       => 'Invalid email.',
             'password.required' => 'Password is required.',
             'cpf_cnpj.required' => 'CPF or CNPJ is required.',
+            'cpf_cnpj.numeric'  => 'CPF or CNPJ must be numeric.',
             'type.required'     => 'Type is required.'
         ];
-
+        
         // Taking only the necessary data
         $requestData = $request->only(['name', 'email', 'password', 'cpf_cnpj', 'type']);
-
-        // First parameter: Data to be validated
-        // Second parameter: rules that will be applied
-        // Third parameter: matching messages
+        
+        // Hashing password
+        $requestData['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
+        
+        // First parameter:  Data to be validated
+        // Second parameter: Rules that will be applied
+        // Third parameter:  Matching messages
         $validator = Validator::make($requestData, $rules, $messages);
-
+        
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-
+        
         $user = User::create($requestData);
 
         return response()->json($user, 201);
