@@ -32,7 +32,7 @@
 </p>
 
 <h4 align="center"> 
-	🚧 Project in development 🚧<br>
+	🏁 A versão 1.0 da aplicação está pronta 🏁<br>
     App version: 1.0
 </h4>
 
