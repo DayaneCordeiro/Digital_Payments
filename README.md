@@ -11,6 +11,13 @@
 ![Badge](https://img.shields.io/badge/Composer-2.1.6-yellowgreen)
 ![Badge](https://img.shields.io/badge/PHPUnit-9.5.10-sucess)
 
+![Badge](https://img.shields.io/badge/PHPMyAdmin-colocar_versão-orange)
+![Badge](https://img.shields.io/badge/Nginx-colocar_versão-sucess)
+![Badge](https://img.shields.io/badge/Apidoc-colocar_versão-blue)
+![Badge](https://img.shields.io/badge/Redis-colocar_versão-red)
+![Badge](https://img.shields.io/badge/MailHog-colocar_versão-success)
+![Badge](https://img.shields.io/badge/Carbon-colocar_versão-success)
+
 <h1>Developing an application with an emphasis on digital payments.</h1>
 
 <p align="center">
@@ -26,13 +33,29 @@
 </h4>
 
 <div id="about">
-    <h1>About</h1>
-    <p>To do.</p>
+<h1>About</h1><br>
+<h3>Description</h3>
+* <div align="justify"> Os tempos de pandemia trouxeram à tona um fato que as pessoas mais inovadoras já haviam se atentado há muito tempo, a necessidade de descomplicar os processos que realizamos no nosso dia a dia. Uma das coisas mais burocráticas ainda nos dias de hoje é lidar com questões bancárias. Além dessa burocracia de utilizar as funções dos bancos físicos, ainda existe a questão da cobrança de diversas taxas de serviço.</div>
+* <div align="justify"> A partir dessa necessidade, surgiram os serviços de pagamentos online. Com o objetivo pricipal de facilitar a vida dos usuários, poupando aquele tempo que era perdido nas filas, removendo as taxas e agilizando todos os processos através de poucos cliques.</div>
+* <div align="justify"> Tendo tudo isso em mente, neste projeto foi desenvolvida uma API Restful, baseada no framework Laravel versão: <b style="color: red;">x.x.x</b> com a finalidade de abstrair de forma mais simplificada a lógica de uma aplicação de pagamentos digital. Foram abordados apenas alguns dos serviços oferecidos por esse tipo de plataforma, sendo o foco principal, a transferência de dinheiro entre usuários comuns e lojistas.</div>
+
+    <h3>Ferramentas utilizadas</h3>
+* <div align="justify"> <b>Sistema operacional: </b>Windows 10 professional</div>
+* <div align="justify"> <b>IDE: </b>Visual Studio Code versão: <b style="color:red">x.x.x</b></div>
+* <div align="justify"> <b>Docker: </b>Desktop versão: <b style="color:red">x.x.x</b></div>
+* <div align="justify"> <b>SGDB: </b>PhpMyAdmin web versão: <b style="color:red">x.x.x</b></div>
 </div>
 
 <div id="pre-requirements">
     <h1>Pre requirements</h1>
-To do.
+* <div align="justify"> Para executar o projeto é necessário ter o docker instalado na máquina e baixar a imagem disponibilizada no site dockerhub, link: <b style="color:red">Inserir o link aqui</b></div>
+* <div align="justify"> Após a realização do download da imagem disponibilizada, estarão disponíveis seis containers:</div>
+* <div align="justify"> Container app: Contem a imagem do PHP</div>
+* <div align="justify"> Container mysql: Contem a imagem do MySQL</div>
+* <div align="justify"> Container nginx: Contem a imagem de uma versão leve do servidor nginx para execução local da aplicação.</div>
+* <div align="justify"> Container phhmyadmin: Contem a imagem do SGDB.</div>
+* <div align="justify"> Container redis: Contem a imagem do Redis para manipulação de cache.</div>
+* <div align="justify"> Container mailhog: Contem a imagem do MailHog para serviço de correio local.</div>
 </div>
 
 <div id="how-to-use">
@@ -46,9 +69,11 @@ To do </div>
 
 - [PHP](https://www.php.net/)
 - [MySQL](https://www.mysql.com/)
-- [JWT](https://github.com/firebase/php-jwt)
 - [Apidoc](https://apidocjs.com/)
-- [Autoload](https://getcomposer.org/doc/01-basic-usage.md)
+- [Composer](insert_link_here)
+- [Docker](insert_link_here)
+- [Laravel](insert_link_here)
+- [PhpUnit](insert_link_here)
 </div>
 
 <div id="autho">
