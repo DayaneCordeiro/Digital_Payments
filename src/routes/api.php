@@ -18,13 +18,14 @@ use App\Http\Controllers\api\v1\TransactionController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-// Route v1 group
+// Routes v1 group
 Route::prefix('v1')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('wallets', WalletController::class);
     Route::apiResource('transactions', TransactionController::class);
+
+    Route::put('users_inactive', [UserController::class, 'inactive']);
+    Route::put('users_active', [UserController::class, 'active']);
+    Route::put('wallets_inactive', [WalletController::class, 'inactive']);
+    Route::put('wallets_active', [WalletController::class, 'active']);
 });
