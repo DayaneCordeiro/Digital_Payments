@@ -19,6 +19,7 @@ class User extends Model
         'email',
         'password',
         'cpf_cnpj',
-        'type'
+        'type',
+        'status'
     ];
 }
