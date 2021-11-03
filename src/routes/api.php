@@ -26,6 +26,10 @@ Route::prefix('v1')->group(function () {
 
     Route::put('users_inactive', [UserController::class, 'inactive']);
     Route::put('users_active', [UserController::class, 'active']);
+
     Route::put('wallets_inactive', [WalletController::class, 'inactive']);
     Route::put('wallets_active', [WalletController::class, 'active']);
+
+    Route::put('transactions_cancel', [TransactionController::class, 'cancel']);
+    Route::put('transactions_cancel_by_user', [TransactionController::class, 'cancelByUser']);
 });
