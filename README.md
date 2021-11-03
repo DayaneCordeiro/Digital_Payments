@@ -79,7 +79,7 @@ To do </div>
 <h1>Configurações do Software</h1>
 <div align="justify">
 <li>O software foi construído com a arquitetura de uso padrão do Laravel, MVC (Model, View e Controller). Tendo os principais controllers dentro da pasta de versionamento da API (v1). E um controller com funções de validação reutilizadas em outros controllers.</li>
-<li>Foi utilizado um sistema de roteamento, com algumas funções nativas do Laravel e outras incluídas sob demanda do projeto. O Laravel possui cinco tipos de rotas padrão (index, show, store, destroy e update) acessadas através da função `Route::apiResource();` nem todas foram necessárias no projeto visto as regras de negócio aplicadas.</li>
+<li>Foi utilizado um sistema de roteamento, com algumas funções nativas do Laravel e outras incluídas sob demanda do projeto. O Laravel possui cinco tipos de rotas padrão (index, show, store, destroy e update) acessadas através da função <code>Route::apiResource();</code> nem todas foram necessárias no projeto visto as regras de negócio aplicadas.</li>
 <li>Para manipulação simplificada das datas, foi utilizada a extensão Carbon.</li>
 </div>
 </div>
