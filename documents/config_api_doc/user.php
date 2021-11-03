@@ -6,10 +6,10 @@
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
  * @apiName GetUserById
- * @apiVersion 1.0.0
  * @apiGroup Users
+ * @apiVersion 1.0.0
  *
- * @apiParam {Number} id    Users unique ID.
+ * @apiParam {Number} id            Users unique ID.
  *
  * @apiSuccess {Response} User      Request return.
  * 
@@ -42,7 +42,7 @@
  * @apiParam {String} status    Status pf the user.
  * @apiParam {String} password  Password of the User. 
  * 
- * @apiSuccess {String} status      Request return.
+ * @apiSuccess {String} status  Request return.
  *
  * @apiSuccessExample Request Example:
  *    {
@@ -69,7 +69,7 @@
  */
 
   /**
- * @api {put} /users/ Updates user
+ * @api {put} /users/ Update user
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
@@ -116,7 +116,6 @@
  * @apiGroup Users
  *
  * @apiParam {Number} id     Id of the User. 
- *
  * 
  * @apiSuccessExample Request Example:
  *    {
@@ -132,7 +131,7 @@
  * @apiName UserInactive
  * @apiGroup Users
  *
- * @apiParam {Number} id     Id of the User. 
+ * @apiParam {Number} id     User unique ID. 
  * 
  * @apiSuccessExample Request Example:
  *    {

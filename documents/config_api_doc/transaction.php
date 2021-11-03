@@ -1,119 +1,94 @@
 <?php
 
 /**
- * @api {post} /wallets_deposite  Insert money into wallet.
+ * @api {put} /transactions_cancel_by_user  User cancel transaction
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
- * @apiName WalletDeposite
- * @apiVersion 1.0.0
- * @apiGroup Wallets
+ * @apiName CancelByUser
+ * @apiGroup Transactions
  *
- * @apiParam {Number} id      Wallet unique ID.
- * @apiParam {Number} value   Money quantity.
- *
- * @apiSuccess {Response} Wallet      Request return.
+ * @apiParam {Number} user_id User unique ID.
+ * @apiParam {Number} id      Transaction unique ID.
  * 
  * @apiSuccessExample Request Example:
  *    {
- *        "id" : 1,
- *        "value" : 12000
- *    }
- * 
- * @apiSuccessExample Return Example:
- *    {
- *        "id": 1,
- *        "user_id": 1,
- *        "balance": 23000,
- *        "status": "active",
- *        "created_at": "2021-11-02T03:50:17.000000Z",
- *        "updated_at": "2021-11-03T04:03:57.000000Z"
+ *        "user_id" : 1,
+ *        "id" : 8
  *    }
  */
 
  /**
- * @api {get} /wallets:id  Get wallet by id
+ * @api {put} /transactions_cancel  Cancel transaction
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
- * @apiName GetWalletById
- * @apiVersion 1.0.0
- * @apiGroup Wallets
+ * @apiName Cancel
+ * @apiGroup Transactions
  *
- * @apiParam {Number} id    Wallets unique ID.
- *
- * @apiSuccess {Response} Wallet      Request return.
+ * @apiParam {Number} id      Transaction unique ID.
  * 
- * @apiSuccessExample Return Example:
+ * @apiSuccessExample Request Example:
  *    {
- *        "id": 1,
- *        "user_id": 1,
- *        "balance": 45000,
- *        "status": "active",
- *        "created_at": "2021-11-02T03:50:17.000000Z",
- *        "updated_at": "2021-11-02T04:08:13.000000Z"
+ *        "id" : 8
  *    }
  */
 
  /**
- * @api {post} /wallets Create new wallet
+ * @api {get} /transactions:id  Get transaction by id
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
- * @apiName CreateWallet
- * @apiGroup Wallets
+ * @apiName GetTransactionById
+ * @apiGroup Transactions
+ *
+ * @apiParam {Number} id    Transaction unique ID.
+ *
+ * @apiSuccess {Response} Transaction      Request return.
  * 
- * @apiParam {Number} user_id   Unique identification of the User.
- * @apiParam {Number} balance   Balance of the wallet.
- * @apiParam {String} status    Status pf the wallet.
+ * @apiSuccessExample Return Example:
+ *    {
+ *        "id": 1,
+ *        "payer_id": 1,
+ *        "payee_id": 2,
+ *        "value": 15000,
+ *        "status": "approved",
+ *        "created_at": "2021-11-02T04:13:42.000000Z",
+ *        "updated_at": "2021-11-02T04:13:42.000000Z"
+ *    }
+ */
+
+ /**
+ * @api {post} /transactions Create new transaction
  * 
- * @apiSuccess {Json} Wallet      Request return.
+ * @apiHeader{json} Header {"Content-Type": "application/json"}
+ * 
+ * @apiName Createtransaction
+ * @apiGroup Transactions
+ * 
+ * @apiParam {Number} payer_id  Unique identification of the User who is paying.
+ * @apiParam {Number} payee_id  Unique identification of the User who is receiving money.
+ * @apiParam {Number} value     Value of the transaction.
+ * @apiParam {String} password  Password of the payer user.
+ * 
+ * @apiSuccess {Json} Transaction      Request return.
  *
  * @apiSuccessExample Request Example:
  *    {
- *        "user_id": 2,
- *        "balance": 50000.00,
- *        "status": "active"
+ *        "payer_id": 1,
+ *        "payee_id": 2,
+ *        "value": 5000,
+ *        "password": "1015466"
  *    }
  * 
  * @apiSuccessExample Return Example:
  *    {
- *       "user_id": 2,
- *       "balance": 50000,
- *       "status": "active",
- *       "updated_at": "2021-11-02T22:42:11.000000Z",
- *    }
- */
-
-  /**
- * @api {put} /wallets_active Active Wallet
- * 
- * @apiHeader{json} Header {"Content-Type": "application/json"}
- * 
- * @apiName WalletActiveS
- * @apiGroup Wallets
- *
- * @apiParam {Number} id     Id of the User. 
- * 
- * @apiSuccessExample Request Example:
- *    {
- *        "id"    :   "1"
- *    }
- *
- */
-
-   /**
- * @api {put} /wallets_inactive Inactive wallet
- * 
- * @apiHeader{json} Header {"Content-Type": "application/json"}
- * 
- * @apiName WalletInactive
- * @apiGroup Wallets
- *
- * @apiParam {Number} id     Id of the User. 
- * 
- * @apiSuccessExample Request Example:
- *    {
- *        "id"    :   "1"
+ *       "payer_id": 1,
+ *       "payee_id": 2,
+ *       "value": 5000,
+ *       "status": "approved",
+ *       "updated_at": "2021-11-03T03:43:08.000000Z",
+ *       "created_at": "2021-11-03T03:43:08.000000Z",
+ *       "id": 8
  *    }
  */

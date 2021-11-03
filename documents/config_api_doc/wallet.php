@@ -1,12 +1,11 @@
 <?php
 
 /**
- * @api {post} /wallets_deposite  Insert money into wallet.
+ * @api {post} /wallets_deposite  Wallet Deposite
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
  * @apiName WalletDeposite
- * @apiVersion 1.0.0
  * @apiGroup Wallets
  *
  * @apiParam {Number} id      Wallet unique ID.
@@ -32,12 +31,11 @@
  */
 
  /**
- * @api {get} /wallets:id  Get wallet by id
+ * @api {get} /wallets:id/  Get wallet by id
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
  * @apiName GetWalletById
- * @apiVersion 1.0.0
  * @apiGroup Wallets
  *
  * @apiParam {Number} id    Wallets unique ID.
@@ -56,7 +54,7 @@
  */
 
  /**
- * @api {post} /wallets Create new wallet
+ * @api {post} /wallets/ Create new wallet
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
@@ -65,7 +63,7 @@
  * 
  * @apiParam {Number} user_id   Unique identification of the User.
  * @apiParam {Number} balance   Balance of the wallet.
- * @apiParam {String} status    Status pf the wallet.
+ * @apiParam {String} status    Status of the wallet.
  * 
  * @apiSuccess {Json} Wallet      Request return.
  *
@@ -86,7 +84,7 @@
  */
 
   /**
- * @api {put} /wallets_active Active Wallet
+ * @api {put} /wallets_active/ Active Wallet
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
@@ -103,7 +101,7 @@
  */
 
    /**
- * @api {put} /wallets_inactive Inactive wallet
+ * @api {put} /wallets_inactive/ Inactive wallet
  * 
  * @apiHeader{json} Header {"Content-Type": "application/json"}
  * 
