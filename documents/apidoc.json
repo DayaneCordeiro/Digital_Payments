@@ -1,0 +1,10 @@
+{
+    "name": "Digital Payments",
+    "version": "1.0",
+    "description": "API that gives access Digital Payments.<br> Endpoint: http://nginx/ap/v1/",
+    "title": "Digital Payments",
+    "apidoc": {
+        "title": "Digital Payments",
+        "url" : "http://nginx/ap/v1/"
+    }
+  }
