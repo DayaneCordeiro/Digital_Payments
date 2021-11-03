@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
 
     Route::put('wallets_inactive', [WalletController::class, 'inactive']);
     Route::put('wallets_active', [WalletController::class, 'active']);
+    Route::post('wallets_deposite', [WalletController::class, 'deposite']);
 
     Route::put('transactions_cancel', [TransactionController::class, 'cancel']);
     Route::put('transactions_cancel_by_user', [TransactionController::class, 'cancelByUser']);
