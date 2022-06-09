@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Http\Requests\CancelTransactionByUserRequest;
 use App\Http\Requests\CancelTransactionRequest;
 use App\Http\Requests\CreateTransactionRequest;
 use Exception;
@@ -97,57 +98,20 @@ class TransactionController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param CancelTransactionByUserRequest $request
      * @return JsonResponse
      */
-    public function cancelByUser(Request $request)
+    public function cancelByUser(CancelTransactionByUserRequest $request)
     {
         try {
             // Validates transaction
-            $transaction  = Transaction::find($request->id);
-
-            if (is_null($transaction)) {
-                $error = ["message" => "Transaction not found."];
-                return response()->json($error, 400);
-            }
+            $transaction  = Transaction::find($request->transaction_id);
 
             $payee_wallet = Wallet::where("user_id", $transaction->payee_id)->first();
             $payer_wallet = Wallet::where("user_id", $transaction->payer_id)->first();
 
-            // Checks if payee has balance
-            if ($payee_wallet->balance < $transaction->value) {
-                $error = ["message" => "Insufficient balance to complete the operation."];
-                return response()->json($error, 400);
-            }
-
-            if ($transaction->status === "canceled") {
-                $error = ["message" => "Transaction is already canceled."];
-                return response()->json($error, 400);
-            }
-
-            // Validation rulers
-            $rules = [
-                "user_id" => "required",
-                "id" => "required"
-            ];
-
-            // Validation messages
-            $messages = [
-                "user_id.required" => "User id is required.",
-                "id.required" => "Transaction id is required."
-            ];
-
             // Taking only the necessary data
             $requestData = $request->only(["user_id", "id"]);
-
-            // First parameter:  Data to be validated
-            // Second parameter: Rules that will be applied
-            // Third parameter:  Matching messages
-            $validator = Validator::make($requestData, $rules, $messages);
-
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
-            }
 
             // Checks who is trying to cancel the transaction and treat
             if ($request->user_id == $transaction->payer_id) {
