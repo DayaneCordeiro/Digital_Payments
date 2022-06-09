@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Http\Requests\CancelTransactionRequest;
 use App\Http\Requests\CreateTransactionRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -67,33 +68,17 @@ class TransactionController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param CancelTransactionRequest $request
      * @return JsonResponse
      */
-    public function cancel(Request $request)
+    public function cancel(CancelTransactionRequest $request)
     {
         try {
             // Validates transaction
-            $transaction  = Transaction::find($request->id);
-
-            if (is_null($transaction)) {
-                $error = ["message" => "Transaction not found."];
-                return response()->json($error, 400);
-            }
+            $transaction  = Transaction::find($request->transaction_id);
 
             $payee_wallet = Wallet::where("user_id", $transaction->payee_id)->first();
             $payer_wallet = Wallet::where("user_id", $transaction->payer_id)->first();
-
-            // Checks if payee has balance
-            if ($payee_wallet->balance < $transaction->value) {
-                $error = ["message" => "Insufficient balance to complete the operation."];
-                return response()->json($error, 400);
-            }
-
-            if ($transaction->status === "canceled") {
-                $error = ["message" => "Transaction is already canceled."];
-                return response()->json($error, 400);
-            }
 
             $transaction->update(["status" => "canceled"]);
 
