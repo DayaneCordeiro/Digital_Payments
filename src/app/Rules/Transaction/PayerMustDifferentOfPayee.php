@@ -7,19 +7,19 @@ use Illuminate\Contracts\Validation\Rule;
 class PayerMustDifferentOfPayee implements Rule
 {
     /**
-     * Create a new rule instance.
-     *
-     * @return void
+     * @param int $payerId
+     * @param int $payeeId
      */
-    public function __construct(private int $payerId, private int $payeeId)
+    public function __construct(
+        private int $payerId,
+        private int $payeeId
+    )
     {
     }
 
     /**
-     * Determine if the validation rule passes.
-     *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param $attribute
+     * @param $value
      * @return bool
      */
     public function passes($attribute, $value)
@@ -28,8 +28,6 @@ class PayerMustDifferentOfPayee implements Rule
     }
 
     /**
-     * Get the validation error message.
-     *
      * @return string
      */
     public function message()

@@ -20,20 +20,36 @@ class CreateTransactionRequest extends FormRequest
             'payer_id' => [
                 'exists:users,id',
                 'required',
-                new UserMustBeCommonType((int) request()->get('payer_id')),
-                new UserMustBeActive((int) request()->get('payer_id')),
-                new PayerMustDifferentOfPayee((int) request()->get('payer_id'), (int) request()->get('payee_id')),
-                new UserWalletMustExists((int) request()->get('payer_id')),
+                new UserMustBeCommonType(
+                    (int) request()->get('payer_id')
+                ),
+                new UserMustBeActive(
+                    (int) request()->get('payer_id')
+                ),
+                new PayerMustDifferentOfPayee(
+                    (int) request()->get('payer_id'),
+                    (int) request()->get('payee_id')
+                ),
+                new UserWalletMustExists(
+                    (int) request()->get('payer_id')
+                ),
             ],
             'payee_id' => [
                 'exists:users,id',
                 'required',
-                new UserMustBeActive((int) request()->get('payee_id')),
-                new UserWalletMustExists((int) request()->get('payee_id')),
+                new UserMustBeActive(
+                    (int) request()->get('payee_id')
+                ),
+                new UserWalletMustExists(
+                    (int) request()->get('payee_id')
+                ),
             ],
             'value' => [
                 'required',
-                new UserHasEnoughBalance((int) request()->get('payer_id'), (float) request()->get('value'))
+                new UserHasEnoughBalance(
+                    (int) request()->get('payer_id'),
+                    (float) request()->get('value')
+                )
             ]
         ];
     }
@@ -45,7 +61,7 @@ class CreateTransactionRequest extends FormRequest
             'payee_id.exists' => 'User not found.',
             'payer_id.required' => 'Payer id is required.',
             'payee_id.required' => 'Payee id is required.',
-            'value.required' => 'Value is required.',
+            'value.required' => 'Value is required.'
         ];
     }
 
