@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Transaction;
 
 use App\Rules\Transaction\TransactionMustBeApproved;
 use App\Rules\Transaction\UserHasBalanceToCancelTransaction;
@@ -9,19 +9,23 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-class CancelTransactionRequest extends FormRequest
+class CancelTransactionByUserRequest extends FormRequest
 {
     public function rules()
     {
         return [
             'transaction_id' => [
                 'exists:transactions,id',
+                'required',
                 new UserHasBalanceToCancelTransaction(
                     (int) request()->get('transaction_id')
                 ),
                 new TransactionMustBeApproved(
                     (int) request()->get('transaction_id')
                 )
+            ],
+            'user_id' => [
+                'required'
             ]
         ];
     }
@@ -29,7 +33,9 @@ class CancelTransactionRequest extends FormRequest
     public function messages()
     {
         return [
-            'transaction_id.exists' => 'Transaction not found.'
+            'transaction_id.exists' => 'Transaction not found.',
+            'transaction_id.required' => 'Transaction id is required.',
+            'user_id.required' => 'User id is required.'
         ];
     }
 

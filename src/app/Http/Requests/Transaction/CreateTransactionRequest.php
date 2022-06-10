@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Transaction;
 
 use App\Rules\Transaction\PayerMustDifferentOfPayee;
 use App\Rules\Transaction\UserHasEnoughBalance;

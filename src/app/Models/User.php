@@ -18,7 +18,7 @@ class User extends Model
         'name',
         'email',
         'password',
-        'cpf_cnpj',
+        'document',
         'type',
         'status'
     ];

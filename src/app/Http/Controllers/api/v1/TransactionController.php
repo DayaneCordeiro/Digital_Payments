@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\CancelTransactionByUserRequest;
-use App\Http\Requests\CancelTransactionRequest;
-use App\Http\Requests\CreateTransactionRequest;
+use App\Http\Requests\Transaction\CancelTransactionByUserRequest;
+use App\Http\Requests\Transaction\CancelTransactionRequest;
+use App\Http\Requests\Transaction\CreateTransactionRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Transaction;
 use App\Models\User;
