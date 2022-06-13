@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\TransactionRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Eloquent\TransactionRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(TransactionRepositoryInterface::class, function() {
+            return new TransactionRepository();
+        });
     }
 
     /**

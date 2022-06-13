@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Requests\Transaction\CancelTransactionByUserRequest;
 use App\Http\Requests\Transaction\CancelTransactionRequest;
 use App\Http\Requests\Transaction\CreateTransactionRequest;
+use App\Services\TransactionService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TransactionController extends Controller
 {
+    public function __construct(
+        public TransactionService $transactionService
+    ) {
+    }
+
     /**
      * @param CreateTransactionRequest $request
      * @return JsonResponse|void
@@ -24,9 +30,18 @@ class TransactionController extends Controller
     public function store(CreateTransactionRequest $request)
     {
         try {
+            /**
+             * Jogar os mocks para repositories
+             * Tirar todos os models do controller
+             *  Controller -> Mapeia a entidade -> Service -> Repository
+             *  Não esquecer dos providers
+             */
+
+            $transaction = $this->transactionService->create($request);
+
             $requestData = $request->only(["payer_id", "payee_id", "value"]);
 
-            $externalAuthorization = Http::get("https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6");
+            $externalAuthorization = Http::get("https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6"); // AuthorizationRepository : authorize(): bool
 
             if ($externalAuthorization["message"] == "Autorizado") {
                 $requestData["status"] = "approved";
