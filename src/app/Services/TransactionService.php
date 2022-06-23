@@ -7,6 +7,7 @@ use App\Http\Requests\Transaction\CreateTransactionRequest;
 use App\Repositories\AuthorizationRepository;
 use App\Repositories\SendEmailRepository;
 use App\Repositories\TransactionRepositoryInterface;
+use App\Models\Transaction as TransactionModel;
 
 class TransactionService
 {
@@ -20,9 +21,9 @@ class TransactionService
 
     /**
      * @param CreateTransactionRequest $transactionRequest
-     * @return \App\Models\Transaction
+     * @return TransactionModel
      */
-    public function create(CreateTransactionRequest $transactionRequest)
+    public function create(CreateTransactionRequest $transactionRequest): TransactionModel
     {
         $authorizationUrl = config('services.transaction.authorization');
 
@@ -47,7 +48,11 @@ class TransactionService
         return $transaction;
     }
 
-    public function cancel(string $transactionId)
+    /**
+     * @param string $transactionId
+     * @return void
+     */
+    public function cancel(string $transactionId): void
     {
         $transaction = $this->transactionRepository->findById($transactionId);
 
@@ -56,5 +61,14 @@ class TransactionService
         $this->walletService->addValueFromWallet($transaction->payer_id, $transaction->value);
 
         $this->transactionRepository->updateStatus($transaction, 'canceled');
+    }
+
+    /**
+     * @param string $transactionId
+     * @return TransactionModel
+     */
+    public function findById(string $transactionId): TransactionModel
+    {
+        return $this->transactionRepository->findById($transactionId);
     }
 }

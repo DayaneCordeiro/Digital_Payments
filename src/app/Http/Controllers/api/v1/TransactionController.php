@@ -45,24 +45,9 @@ class TransactionController extends Controller
         try {
             $this->transactionService->cancel($request->transaction_id);
 
-            //$transaction  = Transaction::find($request->transaction_id);
-
-//            $payee_wallet = Wallet::where("user_id", $transaction->payee_id)->first();
-//            $payer_wallet = Wallet::where("user_id", $transaction->payer_id)->first();
-//
-//            $transaction->update(["status" => "canceled"]);
-//
-//            // Subtract value from payee wallet
-//            $subtractionValue = $payee_wallet->balance - $transaction->value;
-//            $payee_wallet->update(["balance" => $subtractionValue]);
-//
-//            // Add value to payer wallet
-//            $additionValue = $payer_wallet->balance + $transaction->value;
-//            $payer_wallet->update(["balance" => $additionValue]);
-
-            return response()->json(null, 204);
+            return response()->json(null, Response::HTTP_NO_CONTENT);
         } catch(Exception $e) {
-            return response()->json(["Message" => $e->getMessage()], 502);
+            return response()->json(["Message" => $e->getMessage()], Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -119,16 +104,11 @@ class TransactionController extends Controller
     public function show($id)
     {
         try {
-            $transaction = Transaction::find($id);
+            $transaction = $this->transactionService->findById($id);
 
-            if (is_null($transaction)) {
-                $error = ['message' => 'Transaction not found.'];
-                return response()->json($error, 400);
-            }
-
-            return response()->json($transaction, 200);
+            return response()->json($transaction, Response::HTTP_OK);
         } catch(Exception $e) {
-            return response()->json(["Message" => $e->getMessage()], 502);
+            return response()->json(["Message" => $e->getMessage()], Response::HTTP_BAD_GATEWAY);
         }
     }
 }
