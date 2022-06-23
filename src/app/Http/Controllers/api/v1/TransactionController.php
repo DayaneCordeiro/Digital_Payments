@@ -30,16 +30,9 @@ class TransactionController extends Controller
         try {
             $transaction = $this->transactionService->create($request);
 
-            return response()->json(
-                $transaction,
-                Response::HTTP_CREATED
-            );
+            return response()->json($transaction, Response::HTTP_CREATED);
         } catch(Exception $e) {
-            return response()->json([
-                "Message" => $e->getMessage()
-            ],
-                Response::HTTP_BAD_GATEWAY
-            );
+            return response()->json(["Message" => $e->getMessage()], Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -50,21 +43,22 @@ class TransactionController extends Controller
     public function cancel(CancelTransactionRequest $request)
     {
         try {
-            // Validates transaction
-            $transaction  = Transaction::find($request->transaction_id);
+            $this->transactionService->cancel($request->transaction_id);
 
-            $payee_wallet = Wallet::where("user_id", $transaction->payee_id)->first();
-            $payer_wallet = Wallet::where("user_id", $transaction->payer_id)->first();
+            //$transaction  = Transaction::find($request->transaction_id);
 
-            $transaction->update(["status" => "canceled"]);
-
-            // Subtract value from payee wallet
-            $subtractionValue = $payee_wallet->balance - $transaction->value;
-            $payee_wallet->update(["balance" => $subtractionValue]);
-
-            // Add value to payer wallet
-            $additionValue = $payer_wallet->balance + $transaction->value;
-            $payer_wallet->update(["balance" => $additionValue]);
+//            $payee_wallet = Wallet::where("user_id", $transaction->payee_id)->first();
+//            $payer_wallet = Wallet::where("user_id", $transaction->payer_id)->first();
+//
+//            $transaction->update(["status" => "canceled"]);
+//
+//            // Subtract value from payee wallet
+//            $subtractionValue = $payee_wallet->balance - $transaction->value;
+//            $payee_wallet->update(["balance" => $subtractionValue]);
+//
+//            // Add value to payer wallet
+//            $additionValue = $payer_wallet->balance + $transaction->value;
+//            $payer_wallet->update(["balance" => $additionValue]);
 
             return response()->json(null, 204);
         } catch(Exception $e) {

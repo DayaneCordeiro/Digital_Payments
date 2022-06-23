@@ -12,4 +12,16 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         return TransactionModel::create($transaction->toArray());
     }
+
+    public function findById(string $transactionId): TransactionModel
+    {
+        return TransactionModel::find($transactionId);
+    }
+
+    public function updateStatus(TransactionModel $transaction, string $status): void
+    {
+        $transaction->update([
+            "status" => $status
+        ]);
+    }
 }

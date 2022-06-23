@@ -18,6 +18,10 @@ class TransactionService
     ) {
     }
 
+    /**
+     * @param CreateTransactionRequest $transactionRequest
+     * @return \App\Models\Transaction
+     */
     public function create(CreateTransactionRequest $transactionRequest)
     {
         $authorizationUrl = config('services.transaction.authorization');
@@ -41,5 +45,16 @@ class TransactionService
         $this->walletService->addValueFromWallet($transaction->payee_id, $transaction->value);
 
         return $transaction;
+    }
+
+    public function cancel(string $transactionId)
+    {
+        $transaction = $this->transactionRepository->findById($transactionId);
+
+        $this->walletService->subtractValueFromWallet($transaction->payee_id, $transaction->value);
+
+        $this->walletService->addValueFromWallet($transaction->payer_id, $transaction->value);
+
+        $this->transactionRepository->updateStatus($transaction, 'canceled');
     }
 }
