@@ -8,6 +8,8 @@ use App\Repositories\AuthorizationRepository;
 use App\Repositories\SendEmailRepository;
 use App\Repositories\TransactionRepositoryInterface;
 use App\Models\Transaction as TransactionModel;
+use Carbon\Carbon;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransactionService
 {
@@ -67,8 +69,39 @@ class TransactionService
      * @param string $transactionId
      * @return TransactionModel
      */
-    public function findById(string $transactionId): TransactionModel
+    public function findById(string $transactionId): array
     {
         return $this->transactionRepository->findById($transactionId);
+    }
+
+    public function cancelByTimeTolerance(string $transactionId)
+    {
+        $transaction = $this->transactionRepository->findById($transactionId);
+
+        $transactionTime = new Carbon($transaction->created_at);
+
+        $now = Carbon::now();
+
+        $timeDifference = $now->diffInMinutes($transactionTime);
+
+        if ($timeDifference > 5) {
+            return [
+                'message' => [
+                    'message' => 'Cancellation tolerance time exceeded, please contact the bank.'
+                ],
+                'status_code' => Response::HTTP_BAD_REQUEST
+            ];
+        }
+
+        $this->walletService->subtractValueFromWallet($transaction->payee_id, $transaction->value);
+
+        $this->walletService->addValueFromWallet($transaction->payer_id, $transaction->value);
+
+        $this->transactionRepository->updateStatus($transaction, 'canceled');
+
+        return [
+            'message' => null,
+            'status_code' => Response::HTTP_NO_CONTENT
+        ];
     }
 }
