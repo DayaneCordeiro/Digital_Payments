@@ -32,5 +32,5 @@ Route::prefix('v1')->group(function () {
     Route::post('wallets_deposite', [WalletController::class, 'deposite']);
 
     Route::put('transactions_cancel', [TransactionController::class, 'cancel']);
-    Route::put('transactions_cancel_by_user', [TransactionController::class, 'cancelByTimeTolerance']);
+    Route::put('transactions_cancel_by_user', [TransactionController::class, 'cancelByToleranceTime']);
 });

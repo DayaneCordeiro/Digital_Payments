@@ -52,7 +52,7 @@ class TransactionController extends Controller
      * @param CancelTransactionByToleranceTime $request
      * @return JsonResponse
      */
-    public function cancelByTimeTolerance(CancelTransactionByToleranceTime $request)
+    public function cancelByToleranceTime(CancelTransactionByToleranceTime $request)
     {
         try {
             $response = $this->transactionService->cancelByTimeTolerance($request->transaction_id);
