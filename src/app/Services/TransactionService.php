@@ -5,15 +5,17 @@ namespace App\Services;
 use App\Entities\Transaction;
 use App\Http\Requests\Transaction\CreateTransactionRequest;
 use App\Repositories\AuthorizationRepository;
+use App\Repositories\SendEmailRepository;
 use App\Repositories\TransactionRepositoryInterface;
 
 class TransactionService
 {
     public function __construct(
         protected TransactionRepositoryInterface $transactionRepository,
-        protected AuthorizationRepository $authorizationRepository
-    )
-    {
+        protected AuthorizationRepository $authorizationRepository,
+        protected SendEmailRepository $emailRepository,
+        protected WalletService $walletService
+    ) {
     }
 
     public function create(CreateTransactionRequest $transactionRequest)
@@ -22,20 +24,22 @@ class TransactionService
 
         $authorization = $this->authorizationRepository->autorize($authorizationUrl);
 
-        $this->transactionRepository->create(
+        $transaction = $this->transactionRepository->create(
             new Transaction(
                 payerId: $transactionRequest->get('payer_id'),
                 payeeId: $transactionRequest->get('payee_id'),
                 value: $transactionRequest->get('value'),
-                status: null,
-                createdAt: null,
-                updatedAt: null,
-                id: null
+                status: ($authorization) ? "approved" : "not-approved"
             )
         );
 
-        dd($authorization);
+        // implementar uma fila de envio?
+        $this->emailRepository->sendEmail(config('services.email.confirmation'));
 
-        return null;
+        $this->walletService->subtractValueFromWallet($transaction->payer_id, $transaction->value);
+
+        $this->walletService->addValueFromWallet($transaction->payee_id, $transaction->value);
+
+        return $transaction;
     }
 }

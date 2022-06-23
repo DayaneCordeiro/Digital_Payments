@@ -10,10 +10,20 @@ class Transaction
         public int $payerId,
         public int $payeeId,
         public float $value,
-        public ?string $status,
-        public ?string $createdAt,
-        public ?string $updatedAt,
-        public ?int $id
+        public string $status
     ) {
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'payer_id' => $this->payerId,
+            'payee_id' => $this->payeeId,
+            'value' => $this->value,
+            'status' => $this->status
+        ];
     }
 }

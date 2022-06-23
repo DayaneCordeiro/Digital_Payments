@@ -4,12 +4,12 @@ namespace App\Repositories\Eloquent;
 
 use App\Repositories\TransactionRepositoryInterface;
 use App\Entities\Transaction;
+use App\Models\Transaction as TransactionModel;
 
 class TransactionRepository implements TransactionRepositoryInterface
 {
-
-    public function create(Transaction $transaction): Transaction
+    public function create(Transaction $transaction): TransactionModel
     {
-        // TODO: Implement create() method.
+        return TransactionModel::create($transaction->toArray());
     }
 }
