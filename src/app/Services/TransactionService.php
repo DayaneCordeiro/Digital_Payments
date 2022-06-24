@@ -93,11 +93,7 @@ class TransactionService
             ];
         }
 
-        $this->walletService->subtractValueFromWallet($transaction->payee_id, $transaction->value);
-
-        $this->walletService->addValueFromWallet($transaction->payer_id, $transaction->value);
-
-        $this->transactionRepository->updateStatus($transaction, 'canceled');
+        $this->cancel($transactionId);
 
         return [
             'message' => null,
