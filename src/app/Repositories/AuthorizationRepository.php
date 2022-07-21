@@ -9,7 +9,7 @@ class AuthorizationRepository
     const STATUS_APPROVED = 'approved';
     const STATUS_NOT_APPROVED = 'not-approved';
 
-    public function autorize(): bool
+    public function authorize(): bool
     {
         $authorizationUrl = config('services.transaction.authorization');
 

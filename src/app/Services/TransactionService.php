@@ -26,7 +26,7 @@ class TransactionService
      */
     public function create(Transaction $transaction): Transaction
     {
-        $authorization = $this->authorizationRepository->autorize();
+        $authorization = $this->authorizationRepository->authorize();
 
         $transaction->setStatus($authorization);
 
