@@ -28,7 +28,7 @@ class UserHasBalanceToCancelTransaction implements Rule
 
         $wallet = Wallet::where('user_id', $transaction->payee_id)->first();
 
-        return isset($wallet) && $wallet->balance > $transaction->value;
+        return isset($wallet) && $wallet->balance >= $transaction->value;
     }
 
     /**

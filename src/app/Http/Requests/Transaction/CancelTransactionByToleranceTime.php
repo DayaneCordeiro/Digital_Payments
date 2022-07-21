@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-class CancelTransactionByUserRequest extends FormRequest
+class CancelTransactionByToleranceTime extends FormRequest
 {
     public function rules()
     {
@@ -23,9 +23,6 @@ class CancelTransactionByUserRequest extends FormRequest
                 new TransactionMustBeApproved(
                     (int) request()->get('transaction_id')
                 )
-            ],
-            'user_id' => [
-                'required'
             ]
         ];
     }

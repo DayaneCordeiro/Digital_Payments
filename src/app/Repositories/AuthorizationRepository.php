@@ -6,14 +6,19 @@ use Illuminate\Support\Facades\Http;
 
 class AuthorizationRepository
 {
-    public function autorize(string $url): bool
+    const STATUS_APPROVED = 'approved';
+    const STATUS_NOT_APPROVED = 'not-approved';
+
+    public function authorize(): bool
     {
-        $externalAuthorization = Http::get($url);
+        $authorizationUrl = config('services.transaction.authorization');
+
+        $externalAuthorization = Http::get($authorizationUrl);
 
         if ($externalAuthorization["message"] == "Autorizado") {
-            return true;
+            return self::STATUS_APPROVED;
         }
 
-        return false;
+        return self::STATUS_NOT_APPROVED;
     }
 }
