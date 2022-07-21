@@ -8,15 +8,14 @@ use Tests\TestCase;
 class TransactionRepositoryTest extends TestCase
 {
     private TransactionRepository $transactionRepository;
-    private Transaction $transactionEntity;
     private TransactionModel $transactionModel;
 
     protected function setUp(): void
     {
-        $this->transactionEntity = Mockery::mock(Transaction::class);
+        $transactionEntity = Mockery::mock(Transaction::class);
         $this->transactionModel = Mockery::mock(TransactionModel::class);
 
-        $this->transactionRepository = new TransactionRepository($this->transactionEntity);
+        $this->transactionRepository = new TransactionRepository($transactionEntity);
 
         parent::setUp();
     }
