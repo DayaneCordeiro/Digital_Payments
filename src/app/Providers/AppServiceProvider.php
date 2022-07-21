@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\Transaction;
 use App\Repositories\Eloquent\WalletRepository;
 use App\Repositories\TransactionRepositoryInterface;
 use App\Repositories\WalletRepositoryInterface;
@@ -18,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(TransactionRepositoryInterface::class, function() {
-            return new TransactionRepository();
+            return new TransactionRepository(
+                transaction: app(Transaction::class)
+            );
         });
 
         $this->app->bind(WalletRepositoryInterface::class, function() {

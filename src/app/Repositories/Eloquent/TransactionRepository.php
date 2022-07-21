@@ -8,9 +8,16 @@ use App\Models\Transaction as TransactionModel;
 
 class TransactionRepository implements TransactionRepositoryInterface
 {
-    public function create(Transaction $transaction): TransactionModel
+    public function __construct(
+        protected Transaction $transaction
+    ) {
+    }
+
+    public function create(Transaction $transaction): Transaction
     {
-        return TransactionModel::create($transaction->toArray());
+        $transactionModel = TransactionModel::create($transaction->toArray());
+
+        return $this->transaction->fromModel($transactionModel);
     }
 
     public function findById(string $transactionId): TransactionModel

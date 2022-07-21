@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Entities\Transaction;
 use App\Http\Requests\Transaction\CancelTransactionByToleranceTime;
 use App\Http\Requests\Transaction\CancelTransactionRequest;
 use App\Http\Requests\Transaction\CreateTransactionRequest;
@@ -25,7 +26,13 @@ class TransactionController extends Controller
     public function store(CreateTransactionRequest $request)
     {
         try {
-            $transaction = $this->transactionService->create($request);
+            $transaction = new Transaction(
+                payerId: $request->get('payer_id'),
+                payeeId: $request->get('payee_id'),
+                value: $request->get('value')
+            );
+
+            $transaction = $this->transactionService->create($transaction);
 
             return response()->json($transaction, Response::HTTP_CREATED);
         } catch(Exception $e) {

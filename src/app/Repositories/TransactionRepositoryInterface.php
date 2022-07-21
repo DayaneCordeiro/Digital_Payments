@@ -7,7 +7,7 @@ use App\Models\Transaction as TransactionModel;
 
 interface TransactionRepositoryInterface
 {
-    public function create(Transaction $transaction): TransactionModel;
+    public function create(Transaction $transaction): Transaction;
 
     public function findById(string $transactionId): TransactionModel;
 

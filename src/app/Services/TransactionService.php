@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Entities\Transaction;
-use App\Http\Requests\Transaction\CreateTransactionRequest;
 use App\Repositories\AuthorizationRepository;
 use App\Repositories\SendEmailRepository;
 use App\Repositories\TransactionRepositoryInterface;
@@ -13,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TransactionService
 {
+    public const NOT_APPROVED_STATUS = 'not-approved';
+
     public function __construct(
         protected TransactionRepositoryInterface $transactionRepository,
         protected AuthorizationRepository $authorizationRepository,
@@ -22,32 +23,32 @@ class TransactionService
     }
 
     /**
-     * @param CreateTransactionRequest $transactionRequest
-     * @return TransactionModel
+     * @param Transaction $transaction
+     * @return Transaction
      */
-    public function create(CreateTransactionRequest $transactionRequest): TransactionModel
+    public function create(Transaction $transaction): Transaction
     {
-        $authorizationUrl = config('services.transaction.authorization');
+        $authorization = $this->authorizationRepository->autorize();
 
-        $authorization = $this->authorizationRepository->autorize($authorizationUrl);
+        $transaction->setStatus($authorization);
 
-        $transaction = $this->transactionRepository->create(
-            new Transaction(
-                payerId: $transactionRequest->get('payer_id'),
-                payeeId: $transactionRequest->get('payee_id'),
-                value: $transactionRequest->get('value'),
-                status: ($authorization) ? "approved" : "not-approved"
-            )
-        );
+        $transactionResponse = $this->transactionRepository->create($transaction);
 
-        // implementar uma fila de envio?
-        $this->emailRepository->sendEmail(config('services.email.confirmation'));
+        if ($authorization != self::NOT_APPROVED_STATUS) {
+            $this->emailRepository->sendEmail();
 
-        $this->walletService->subtractValueFromWallet($transaction->payer_id, $transaction->value);
+            $this->walletService->subtractValueFromWallet(
+                $transactionResponse->payerId,
+                $transactionResponse->value
+            );
 
-        $this->walletService->addValueFromWallet($transaction->payee_id, $transaction->value);
+            $this->walletService->addValueFromWallet(
+                $transactionResponse->payeeId,
+                $transactionResponse->value
+            );
+        }
 
-        return $transaction;
+        return $transactionResponse;
     }
 
     /**

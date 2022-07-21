@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Http;
 
 class SendEmailRepository
 {
-    public function sendEmail(string $url): bool
+    public function sendEmail(): bool
     {
+        $url = config('services.email.confirmation');
+
         $sendEmailConfirmation = Http::get($url);
 
         if ($sendEmailConfirmation["message"] == "Success") {
