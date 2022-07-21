@@ -64,7 +64,15 @@ class TransactionController extends Controller
         try {
             $response = $this->transactionService->cancelByTimeTolerance($request->transaction_id);
 
-            return response()->json($response['message'], $response['status_code']);
+            if ($response) {
+                return response()->json(null, Response::HTTP_NO_CONTENT);
+            }
+
+            return response()->json(
+                [
+                    'Message' => 'Cancellation tolerance time exceeded, please contact the bank.'
+                ],
+                Response::HTTP_BAD_REQUEST);
         } catch(Exception $e) {
             return response()->json(["Message" => $e->getMessage()], Response::HTTP_BAD_GATEWAY);
         }

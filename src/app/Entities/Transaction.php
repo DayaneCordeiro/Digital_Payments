@@ -46,6 +46,19 @@ class Transaction
         );
     }
 
+    public function toModel(): TransactionModel
+    {
+
+        dd($this);
+        return new TransactionModel([
+            'payer_id' => $this->payerId,
+            'payee_id' => $this->payeeId,
+            'value' => $this->value,
+            'status' => $this->status,
+            'id' => $this->id
+        ]);
+    }
+
     /**
      * @param string $status
      * @return void

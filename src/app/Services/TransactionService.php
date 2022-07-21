@@ -6,9 +6,7 @@ use App\Entities\Transaction;
 use App\Repositories\AuthorizationRepository;
 use App\Repositories\SendEmailRepository;
 use App\Repositories\TransactionRepositoryInterface;
-use App\Models\Transaction as TransactionModel;
 use Carbon\Carbon;
-use Symfony\Component\HttpFoundation\Response;
 
 class TransactionService
 {
@@ -59,46 +57,42 @@ class TransactionService
     {
         $transaction = $this->transactionRepository->findById($transactionId);
 
-        $this->walletService->subtractValueFromWallet($transaction->payee_id, $transaction->value);
+        $this->walletService->subtractValueFromWallet($transaction->payeeId, $transaction->value);
 
-        $this->walletService->addValueFromWallet($transaction->payer_id, $transaction->value);
+        $this->walletService->addValueFromWallet($transaction->payerId, $transaction->value);
 
         $this->transactionRepository->updateStatus($transaction, 'canceled');
     }
 
     /**
      * @param string $transactionId
-     * @return TransactionModel
+     * @return Transaction
      */
-    public function findById(string $transactionId): array
+    public function findById(string $transactionId): Transaction
     {
         return $this->transactionRepository->findById($transactionId);
     }
 
-    public function cancelByTimeTolerance(string $transactionId)
+    /**
+     * @param string $transactionId
+     * @return bool
+     */
+    public function cancelByTimeTolerance(string $transactionId): bool
     {
         $transaction = $this->transactionRepository->findById($transactionId);
 
-        $transactionTime = new Carbon($transaction->created_at);
+        $transactionTime = new Carbon($transaction->createdAt);
 
         $now = Carbon::now();
 
         $timeDifference = $now->diffInMinutes($transactionTime);
 
         if ($timeDifference > 5) {
-            return [
-                'message' => [
-                    'message' => 'Cancellation tolerance time exceeded, please contact the bank.'
-                ],
-                'status_code' => Response::HTTP_BAD_REQUEST
-            ];
+            return false;
         }
 
         $this->cancel($transactionId);
 
-        return [
-            'message' => null,
-            'status_code' => Response::HTTP_NO_CONTENT
-        ];
+        return true;
     }
 }

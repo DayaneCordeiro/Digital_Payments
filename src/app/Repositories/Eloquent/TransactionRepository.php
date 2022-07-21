@@ -13,6 +13,10 @@ class TransactionRepository implements TransactionRepositoryInterface
     ) {
     }
 
+    /**
+     * @param Transaction $transaction
+     * @return Transaction
+     */
     public function create(Transaction $transaction): Transaction
     {
         $transactionModel = TransactionModel::create($transaction->toArray());
@@ -20,15 +24,26 @@ class TransactionRepository implements TransactionRepositoryInterface
         return $this->transaction->fromModel($transactionModel);
     }
 
-    public function findById(string $transactionId): TransactionModel
+    /**
+     * @param string $transactionId
+     * @return Transaction
+     */
+    public function findById(string $transactionId): Transaction
     {
-        return TransactionModel::find($transactionId);
+        $transactionModel = TransactionModel::find($transactionId);
+
+        return $this->transaction->fromModel($transactionModel);
     }
 
-    public function updateStatus(TransactionModel $transaction, string $status): void
+    /**
+     * @param Transaction $transaction
+     * @param string $status
+     * @return void
+     */
+    public function updateStatus(Transaction $transaction, string $status): void
     {
-        $transaction->update([
-            "status" => $status
-        ]);
+        $transactionModel = TransactionModel::find($transaction->id);
+
+        $transactionModel->update(["status" => $status]);
     }
 }

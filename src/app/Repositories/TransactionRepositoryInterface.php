@@ -3,13 +3,12 @@
 namespace App\Repositories;
 
 use App\Entities\Transaction;
-use App\Models\Transaction as TransactionModel;
 
 interface TransactionRepositoryInterface
 {
     public function create(Transaction $transaction): Transaction;
 
-    public function findById(string $transactionId): TransactionModel;
+    public function findById(string $transactionId): Transaction;
 
-    public function updateStatus(TransactionModel $transaction, string $status): void;
+    public function updateStatus(Transaction $transaction, string $status): void;
 }
