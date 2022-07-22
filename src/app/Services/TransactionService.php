@@ -11,6 +11,7 @@ use Carbon\Carbon;
 class TransactionService
 {
     public const NOT_APPROVED_STATUS = 'not-approved';
+    public const CANCELED_STATUS = 'canceled';
 
     public function __construct(
         protected TransactionRepositoryInterface $transactionRepository,
@@ -61,7 +62,7 @@ class TransactionService
 
         $this->walletService->addValueFromWallet($transaction->payerId, $transaction->value);
 
-        $this->transactionRepository->updateStatus($transaction, 'canceled');
+        $this->transactionRepository->updateStatus($transaction, self::CANCELED_STATUS);
     }
 
     /**

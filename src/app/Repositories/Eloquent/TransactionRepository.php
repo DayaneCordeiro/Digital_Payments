@@ -9,7 +9,7 @@ use App\Models\Transaction as TransactionModel;
 class TransactionRepository implements TransactionRepositoryInterface
 {
     public function __construct(
-        protected Transaction $transaction
+        private TransactionModel $transactionModel
     ) {
     }
 
@@ -19,9 +19,9 @@ class TransactionRepository implements TransactionRepositoryInterface
      */
     public function create(Transaction $transaction): Transaction
     {
-        $transactionModel = TransactionModel::create($transaction->toArray());
+        $transactionModel = $this->transactionModel::create($transaction->toArray());
 
-        return $this->transaction->fromModel($transactionModel);
+        return Transaction::fromArray($transactionModel->toArray());
     }
 
     /**
@@ -30,9 +30,9 @@ class TransactionRepository implements TransactionRepositoryInterface
      */
     public function findById(string $transactionId): Transaction
     {
-        $transactionModel = TransactionModel::find($transactionId);
+        $transactionModel = $this->transactionModel::find($transactionId);
 
-        return $this->transaction->fromModel($transactionModel);
+        return Transaction::fromArray($transactionModel->toArray());
     }
 
     /**
@@ -42,7 +42,7 @@ class TransactionRepository implements TransactionRepositoryInterface
      */
     public function updateStatus(Transaction $transaction, string $status): void
     {
-        $transactionModel = TransactionModel::find($transaction->id);
+        $transactionModel = $this->transactionModel::find($transaction->id);
 
         $transactionModel->update(["status" => $status]);
     }
