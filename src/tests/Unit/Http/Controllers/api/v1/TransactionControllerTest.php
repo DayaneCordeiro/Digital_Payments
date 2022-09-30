@@ -42,6 +42,7 @@ class TransactionControllerTest extends TestCase
 
         // Assert
         $this->assertInstanceOf(JsonResponse::class, $jsonResponse);
+        $this->assertInstanceOf(Transaction::class, $jsonResponse->original);
         $this->assertEquals(Response::HTTP_CREATED, $jsonResponse->getStatusCode());
     }
 
@@ -54,6 +55,7 @@ class TransactionControllerTest extends TestCase
         $jsonResponse = $this->transactionController->cancel($request);
 
         $this->assertInstanceOf(JsonResponse::class, $jsonResponse);
+        $this->assertInstanceOf(ArrayObject::class, $jsonResponse->original);
         $this->assertEquals(Response::HTTP_NO_CONTENT, $jsonResponse->getStatusCode());
     }
 
@@ -66,6 +68,7 @@ class TransactionControllerTest extends TestCase
         $jsonResponse = $this->transactionController->cancelByToleranceTime($request);
 
         $this->assertInstanceOf(JsonResponse::class, $jsonResponse);
+        $this->assertInstanceOf(ArrayObject::class, $jsonResponse->original);
         $this->assertEquals(Response::HTTP_NO_CONTENT, $jsonResponse->getStatusCode());
     }
 
@@ -78,6 +81,7 @@ class TransactionControllerTest extends TestCase
         $jsonResponse = $this->transactionController->cancelByToleranceTime($request);
 
         $this->assertInstanceOf(JsonResponse::class, $jsonResponse);
+        $this->assertIsArray($jsonResponse->original);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $jsonResponse->getStatusCode());
     }
 
@@ -97,6 +101,7 @@ class TransactionControllerTest extends TestCase
         $jsonResponse = $this->transactionController->show($transactionId);
 
         $this->assertInstanceOf(JsonResponse::class, $jsonResponse);
+        $this->assertInstanceOf(Transaction::class, $jsonResponse->original);
         $this->assertEquals(Response::HTTP_OK, $jsonResponse->getStatusCode());
     }
 }
